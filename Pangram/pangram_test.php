@@ -1,8 +1,8 @@
 <?php
-
+use PHPUnit\Framework\TestCase;
 require "pangram.php";
 
-class PangramTest extends PHPUnit_Framework_TestCase
+class PangramTest extends TestCase
 {
     public function testSentenceEmpty()
     {

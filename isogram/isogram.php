@@ -1,33 +1,44 @@
 <?php
-$str = "Hjelmqvist-Gryb-Zock-Pfund-Wax";
-
+/*
+* Check if a String is an Isogram.
+* Same Occurency of each letter in the word.
+*
+*
+*/
 function isIsogram(string $str){
   $result = true;
-  $toChange = ["-"];
-  $changeInto = [""];
-  $string = str_replace($toChange, $changeInto, $str);
-  $stringLength = strlen($string);
+  $str = strtolower($str);
+  $toIgnore = ["45", "227", "32"];
+  $strLength = strlen($str);
+  $letterOccurence= [];
+
+  // Set the Array.
+  for ($i = 0; $i < $strLength; $i++){
+    $value = ord($str[$i]);
+    $letterOccurence[$value] = 0;
+  }
 
 
-  for ($j = 0; $j < $stringLength; $j++){
-    for ($k = $stringLength - 1; $k > 0 + $j; $k--){
-      $diff = strcasecmp($string[$j], $string[$k]);
-      if( $diff == 0 && $j != $k){
-        $result = false;
-      }
+  //Increment the Array.
+  for ($i = 0; $i < $strLength; $i++){
+    $value = ord($str[$i]);
+    $letterOccurence[$value] += 1;
+  }
+
+  // Ignore(unset) the Char set in $toIgnore.
+  foreach ($toIgnore as $value){
+    if (array_key_exists($value, $letterOccurence)){
+      unset($letterOccurence[$value]);
     }
   }
 
-  // foreach (count_chars($data, 1) as $i => $val){
-  //   if ($val > 1){
-  //     result = false;
-  //   }
-  // }
+  // Check if every Occurence are the same.
+  $firstValue = current($letterOccurence);
+    foreach ($letterOccurence as $value) {
+        if ($firstValue !== $value) {
+            $result = false;
+        }
+    }
 
   return $result;
 }
-
-
-
-
-print_r(isIsogram($str));
